@@ -24,8 +24,8 @@ html = """
             min-height: 100vh;
             color: #f0f8ff;
             background-color: #070217;
-            font-size: 20px;
-            font-family: "Helvetica", Times, serif;
+            font-size: 24px;
+            font-family: 'font', sans-serif;
         }
         </style>
     </head>
