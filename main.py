@@ -1,3 +1,9 @@
+"""
+Тестовое задание по созданию чата
+посредстовом протокола WebSocket
+между сервером и клиентом.
+"""
+
 from fastapi import FastAPI, WebSocket
 from fastapi.responses import HTMLResponse
 
@@ -11,7 +17,15 @@ html = """
         <title>Чат</title>
         <style>
         body {
-            margin: 50px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #f0f8ff;
+            background-color: #070217;
+            font-size: 20px;
+            font-family: "Helvetica", Times, serif;
         }
         </style>
     </head>
@@ -46,11 +60,19 @@ html = """
 
 @app.get("/")
 async def get():
+    """
+    Метод главной страницы с формой и чатом,
+    который отправляет html шаблон.
+    """
     return HTMLResponse(html)
 
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
+    """
+    Метод обработки сообщения от клиента, присвоения ему порядкового номера
+    и отправки итогового сообщения в чат на главную страницу в формате JSON.
+    """
     await websocket.accept()
     counter = 0
     while True:
