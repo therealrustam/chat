@@ -14,13 +14,13 @@ html = """
 <html lang="ru">
     <head>
         <meta charset="utf-8">
-        <title>Чат</title>
+        <title>Чат - тестовое задание</title>
         <style>
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: top;
             min-height: 100vh;
             color: #f0f8ff;
             background-color: #070217;
@@ -30,7 +30,7 @@ html = """
         </style>
     </head>
     <body>
-        <h1>Чат тестового задания</h1>
+        <h1>Чат</h1>
         <form action="" onsubmit="sendMessage(event)">
             <input type="text" id="messageText" autocomplete="off"/>
             <button>Отправить</button>
