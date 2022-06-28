@@ -48,7 +48,7 @@ html = """
             };
             function sendMessage(event) {
                 var input = document.getElementById("messageText")
-                ws.send(input.value)
+                ws.send(JSON.stringify({data: input.value}))
                 input.value = ''
                 event.preventDefault()
             }
@@ -76,8 +76,9 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     counter = 0
     while True:
-        data = await websocket.receive_text()
-        if data != "":
+        data = await websocket.receive_json()
+        text = data["data"]
+        if text != "":
             counter += 1
-            await websocket.send_json(f"{counter}. {data}")
+            await websocket.send_json(f"{counter}. {text}")
         continue
