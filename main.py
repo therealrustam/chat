@@ -4,6 +4,8 @@
 между сервером и клиентом.
 """
 
+import json
+
 from fastapi import FastAPI, WebSocket
 from fastapi.responses import HTMLResponse
 
@@ -42,7 +44,10 @@ html = """
             ws.onmessage = function(event) {
                 var messages = document.getElementById('messages')
                 var message = document.createElement('p')
-                var content = document.createTextNode(JSON.parse(event.data))
+                var result = JSON.parse(event.data)
+                var result_json = JSON.parse(result)
+                var content = document.createTextNode(
+                    result_json.number + ". " + result_json.text)
                 message.appendChild(content)
                 messages.appendChild(message)
             };
@@ -80,5 +85,7 @@ async def websocket_endpoint(websocket: WebSocket):
         text = data["data"]
         if text != "":
             counter += 1
-            await websocket.send_json(f"{counter}. {text}")
+            result = {"number": counter, "text": text}
+            result_json = json.dumps(result)
+            await websocket.send_json(result_json)
         continue
