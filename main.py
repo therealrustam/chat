@@ -27,9 +27,12 @@ html = """
             color: #f0f8ff;
             background-color: #070217;
             font-size: 24px;
-            font-family: 'font', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
         </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     </head>
     <body>
         <h1>Чат</h1>
@@ -45,9 +48,8 @@ html = """
                 var messages = document.getElementById('messages')
                 var message = document.createElement('p')
                 var result = JSON.parse(event.data)
-                var result_json = JSON.parse(result)
                 var content = document.createTextNode(
-                    result_json.number + ". " + result_json.text)
+                    result.number + ". " + result.text)
                 message.appendChild(content)
                 messages.appendChild(message)
             };
@@ -86,6 +88,5 @@ async def websocket_endpoint(websocket: WebSocket):
         if text != "":
             counter += 1
             result = {"number": counter, "text": text}
-            result_json = json.dumps(result)
-            await websocket.send_json(result_json)
+            await websocket.send_json(result)
         continue
